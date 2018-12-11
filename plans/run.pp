@@ -17,7 +17,7 @@ plan bolt_compliance::run(
     notice("Result for control ${control}: ${result}")
 
     $result.each | $result | {
-      $result_hash = $result.value + { target => $result.target.name, control => $control, message => $result.message }
+      $result_hash = $result.value + { target => $result.target.name, control => $control }
       $task_args = $default_task_args + { data => { event => $result_hash } }
       notice("task args: ${task_args}")
       $splunk_result = run_task('bolt_compliance::send_to_splunk', 'localhost', $task_args)

@@ -20,7 +20,7 @@
 # could continue to exploit the known flaw.
 
 if mount | grep /tmp > /dev/null ; then
-  echo "Control passed: /tmp is a separate filesystem"
+  echo -n "Control passed: /tmp is a separate filesystem"
 else 
-  echo "Control failed: /tmp is not a separate filesystem"
+  echo -n "Control failed: /tmp is not a separate filesystem"
 fi

@@ -20,10 +20,10 @@ result = {}
 
 try:
     output = subprocess.check_output(command, shell=True)
-    result['_output'] = "control passed: crond enabled" + output
+    result['_output'] = "control passed: crond enabled - " + output
     result['compliant'] = True
 except subprocess.CalledProcessError as e:
-    result['_output'] = "control failed: crond disabled;", e.output
+    result['_output'] = "control failed: crond disabled - " + e.output
     result['compliant'] = False
 
 print(json.dumps(result))
