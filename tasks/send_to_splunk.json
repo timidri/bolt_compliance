@@ -1,0 +1,19 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "A short description of this task",
+  "parameters": {
+    "splunk_endpoint": {
+      "description": "The Splunk HTTP Event Collector endpoint",
+      "type": "String[1]"
+    },
+    "splunk_token": {
+      "description": "The Splunk HTTP Event Collector token",
+      "type": "String[1]"
+    },
+    "data": {
+      "description": "The data to be sent to Splunk",
+      "type": "Hash"
+    }
+  }
+}
