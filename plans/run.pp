@@ -3,18 +3,25 @@ plan bolt_compliance::run(
   TargetSpec $nodes,
 ) {
 
-  notice($controls)
+  notice("Running controls: ${controls}")
+
+  $default_task_args = {
+    splunk_endpoint => 'https://splunk.slice.puppetlabs.net:8088/services/collector',
+    splunk_token => '66a4327c-5db6-4fdb-97a1-9fdafcd193e1',
+  }
 
   $controls.each | $control | {
     notice("Running control: ${control}")
+
     $result = run_task("bolt_compliance::cis_rhel7_${control}", $nodes)
     notice("Result for control ${control}: ${result}")
-  #   $g_benchmark='CIS_RHEL7'
-  #   $g_token='66a4327c-5db6-4fdb-97a1-9fdafcd193e1'
-  #   $g_splunk_endpoint='https://splunk.slice.puppetlabs.net:8088/services/collector'
 
-  #   $result.each | $r | {
-  #     $sts=send_to_splunk($r['body'], $g_splunk_endpoint,  $g_token, true)
-  #   }
+    $result.each | $result | {
+      $result_hash = $result.value + { target => $result.target.name, control => $control, message => $result.message }
+      $task_args = $default_task_args + { data => { event => $result_hash } }
+      notice("task args: ${task_args}")
+      $splunk_result = run_task('bolt_compliance::send_to_splunk', 'localhost', $task_args)
+      notice("Result from Splunk: ${splunk_result}")
+    }
   }
 }

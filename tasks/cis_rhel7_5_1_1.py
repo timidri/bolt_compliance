@@ -1,11 +1,29 @@
 #!/usr/bin/env python
+#
+# 5.1.1 Ensure cron daemon is enabled (Scored)
+#
+# Description:
+#
+# The cron daemon is used to execute batch jobs on the system.
+# Rationale:
+#
+# While there may not be user jobs that need to be run on the system, the system does have
+# maintenance jobs that may include security monitoring that have to run, and cron is used
+# to execute them.
 
 import subprocess
+import json
 
 command = 'systemctl is-enabled crond'
 
+result = {}
+
 try:
     output = subprocess.check_output(command, shell=True)
-    print "control passed: crond enabled"
+    result['_output'] = "control passed: crond enabled" + output
+    result['compliant'] = True
 except subprocess.CalledProcessError as e:
-    print "control failed: crond disabled"
+    result['_output'] = "control failed: crond disabled;", e.output
+    result['compliant'] = False
+
+print(json.dumps(result))
