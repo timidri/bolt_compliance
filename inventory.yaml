@@ -1,0 +1,5 @@
+groups:
+  - name: all_ssh
+    nodes:
+      - macs6lesp8kcgfl.delivery.puppetlabs.net
+      - jwpaw4v58f8shqq.delivery.puppetlabs.net
