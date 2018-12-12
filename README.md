@@ -1,4 +1,3 @@
-
 # bolt_compliance
 
 Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
@@ -9,80 +8,50 @@ The README template below provides a starting point with details about what info
 
 1. [Description](#description)
 2. [Setup - The basics of getting started with bolt_compliance](#setup)
-    * [What bolt_compliance affects](#what-bolt_compliance-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with bolt_compliance](#beginning-with-bolt_compliance)
+   - [What bolt_compliance affects](#what-bolt_compliance-affects)
+   - [Setup requirements](#setup-requirements)
+   - [Beginning with bolt_compliance](#beginning-with-bolt_compliance)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+An example module showing how to implement CIS compliance testing tasks and plans which can send the output to Splunk.
 
 ## Setup
 
-### What bolt_compliance affects **OPTIONAL**
+### Install the bolt_compliance module
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+```bash
+puppet module install puppetlabs-stdlib
+mkdir ~/modules
+cd ~/modules
+git clone https://github.com/timidri/bolt_compliance.git
+cd bolt_compliance
+```
 
-If there's more that they should know about, though, this is the place to mention:
+### Configure Splunk
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+To use bolt_compliance, you need to create a Splunk HTTP Event Collector token in a Splunk Enterprise instance available to you. See [Splunk HEC Service](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) for guidance.
 
-### Setup Requirements **OPTIONAL**
+Then, create a configuration file `splunk-config.yaml`:
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
+```bash
+cp splunk-config-default.yaml splunk-config.yaml
+```
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with bolt_compliance
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+and configure the Splunk HEC endpoint and token there.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+To run a compliance plan, make sure you have some CentOS or Red Hat 7 nodes configured in the inventory.yaml. Then, you can run the plan as follows:
 
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
+```bash
+bolt plan run bolt_compliance::run --params '{"controls": ["1_1_2", "5_1_1"]}' -n all
 ```
-### `pet::cat`
 
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
+to perform both available control checks on all the configured nodes.
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
-
-## Development
-
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+The examples are for PoC / educational purposes only and only work on RHEL7 target nodes.
