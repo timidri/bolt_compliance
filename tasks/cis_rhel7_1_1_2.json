@@ -1,0 +1,6 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "1.1.2 Ensure separate partition exists for /tmp",
+  "parameters": {}
+}

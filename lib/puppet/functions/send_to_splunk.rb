@@ -1,4 +1,4 @@
-#/usr/bin/env ruby
+#!/usr/bin/env ruby
 require 'net/http'
 require 'net/https'
 require 'openssl'
@@ -18,13 +18,13 @@ Puppet::Functions.create_function(:send_to_splunk) do
   def send_to_splunk(data, splunk_endpoint, splunk_token, verbose)
     uri = URI(splunk_endpoint)
     request = Net::HTTP::Post.new(uri)
-    request.add_field("Authorization", "Splunk #{splunk_token}")
-    request.add_field("Content-Type", "application/json")
-    request.body = {event:data}.to_json
+    request.add_field('Authorization', "Splunk #{splunk_token}")
+    request.add_field('Content-Type', 'application/json')
+    request.body = { event: data }.to_json
 
     options = {
-      :use_ssl => uri.scheme == 'https',
-      :verify_mode => OpenSSL::SSL::VERIFY_NONE
+      use_ssl: uri.scheme == 'https',
+      verify_mode: OpenSSL::SSL::VERIFY_NONE,
     }
 
     response = nil
