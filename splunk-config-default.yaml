@@ -1,0 +1,2 @@
+splunk_endpoint: "https://my.splunk.endpoint/services/collector"
+splunk_token: "my-splunk-token"

@@ -1,7 +1,7 @@
 {
   "puppet_task_version": 1,
   "supports_noop": false,
-  "description": "A short description of this task",
+  "description": "Send data to a Splunk HEC",
   "parameters": {
     "splunk_endpoint": {
       "description": "The Splunk HTTP Event Collector endpoint",

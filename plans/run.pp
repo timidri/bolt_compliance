@@ -5,10 +5,7 @@ plan bolt_compliance::run(
 
   notice("Running controls: ${controls}")
 
-  $default_task_args = {
-    splunk_endpoint => 'https://splunk.slice.puppetlabs.net:8088/services/collector',
-    splunk_token => '66a4327c-5db6-4fdb-97a1-9fdafcd193e1',
-  }
+  $default_task_args = loadyaml('splunk-config.yaml')
 
   $controls.each | $control | {
     notice("Running control: ${control}")
