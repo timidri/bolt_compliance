@@ -1,0 +1,12 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "input_method": "environment",
+  "description": "Check that shell is invalid for login",
+  "parameters": {
+    "user": {
+      "description": "Apache Account",
+      "type": "String"
+    }
+  }
+}
