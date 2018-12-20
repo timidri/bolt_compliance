@@ -16,7 +16,7 @@
 # if they can be used to get a login shell to the system.
 #
 
-if [ "$(awk -F: -v user="${PT_user}" '$1 == user {print $7 }' /etc/passwd)" = "/sbin/nologin" ] ; then
+if [ "$(awk -F:  '$1 == "apache" {print $7 }' /etc/passwd)" = "/sbin/nologin" ] ; then
   echo "Control passed: Shell is invalid for login"
 else
   echo "Control failed: Shell is not invalid for login"
