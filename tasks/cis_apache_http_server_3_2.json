@@ -1,0 +1,7 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Check that shell is invalid for login",
+  "parameters": {
+  }
+}
