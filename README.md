@@ -1,9 +1,5 @@
 # bolt_compliance
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -51,6 +47,12 @@ bolt plan run bolt_compliance::run --params '{"controls": ["1_1_2", "5_1_1"]}' -
 ```
 
 to perform both available control checks on all the configured nodes.
+
+To run a plan using the benchmark yaml specification in `rhel7-cis-1.yaml`, do:
+
+```bash
+bolt plan run bolt_compliance::run_yaml --params '{"benchmarks": ["rhel7-cis-1"]}' -n all
+```
 
 ## Limitations
 

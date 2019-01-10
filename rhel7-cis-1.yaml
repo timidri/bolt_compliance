@@ -1,0 +1,32 @@
+benchmark:
+  id: rhel7-cis-1
+  name: CIS Red Hat Enterprise Linux 7 Benchmark
+  version: v2.2.0 - 12-27-2017
+controls:
+  - id: 1.1.2
+    name: Ensure separate partition exists for /tmp
+    description:
+      The /tmp directory is a world-writable directory used for temporary storage by all users
+      and some applications.
+    rationale:
+      Since the /tmp directory is intended to be world-writable, there is a risk of resource
+      exhaustion if it is not bound to a separate partition. In addition, making /tmp its own file
+      system allows an administrator to set the noexec option on the mount, making /tmp useless
+      for an attacker to install executable code. It would also prevent an attacker from
+      establishing a hardlink to a system setuid program and wait for it to be updated. Once the
+      program was updated, the hardlink would be broken and the attacker would have his own
+      copy of the program. If the program happened to have a security vulnerability, the attacker
+      could continue to exploit the known flaw.
+    impact: 1.0
+    bash:
+      - mount | grep /tmp > /dev/null
+  - id: 5.1.1
+    name: Ensure cron daemon is enabled
+    description: The cron daemon is used to execute batch jobs on the system.
+    rationale:
+      While there may not be user jobs that need to be run on the system, the system does have
+      maintenance jobs that may include security monitoring that have to run, and cron is used
+      to execute them
+    impact: 1.0
+    bash:
+      - systemctl is-enabled crond

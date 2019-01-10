@@ -16,6 +16,11 @@ import json
 
 command = 'systemctl is-enabled crond'
 
+description = "The cron daemon is used to execute batch jobs on the system."
+rationale = """While there may not be user jobs that need to be run on the system, the system does have
+maintenance jobs that may include security monitoring that have to run, and cron is used
+to execute them"""
+
 result = {}
 
 try:
@@ -25,5 +30,8 @@ try:
 except subprocess.CalledProcessError as e:
     result['_output'] = "control failed: crond disabled - " + e.output
     result['compliant'] = False
+
+result['description'] = description
+result['rationale'] = rationale
 
 print(json.dumps(result))
