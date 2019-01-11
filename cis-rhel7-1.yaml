@@ -1,5 +1,5 @@
 benchmark:
-  id: rhel7-cis-1
+  id: cis-rhel7-1
   name: CIS Red Hat Enterprise Linux 7 Benchmark
   version: v2.2.0 - 12-27-2017
 controls:
